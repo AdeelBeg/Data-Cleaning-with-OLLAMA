@@ -1,6 +1,8 @@
 from __future__ import annotations
 import argparse
+import csv
 from pathlib import Path
+from typing import Any, Dict, List
 import pandas as pd
 
 from ..common.schema import RetailSchema
@@ -16,6 +18,22 @@ from ..evaluation.error_injection import inject_errors, score_repairs
 def _audit_log(before: pd.DataFrame, after: pd.DataFrame, out_path: Path) -> None:
     # Record only cells that changed
     changes = []
+AUDIT_FIELDS = [
+    "method",
+    "row_index",
+    "column",
+    "old_value",
+    "new_value",
+    "note",
+]
+
+def _collect_audit_entries(
+    before: pd.DataFrame,
+    after: pd.DataFrame,
+    method: str,
+    note: str,
+) -> List[Dict[str, Any]]:
+    changes: List[Dict[str, Any]] = []
     common_cols = [c for c in before.columns if c in after.columns]
     for idx in before.index.intersection(after.index):
         b = before.loc[idx, common_cols]
@@ -23,8 +41,25 @@ def _audit_log(before: pd.DataFrame, after: pd.DataFrame, out_path: Path) -> Non
         diff_cols = [c for c in common_cols if str(b[c]) != str(a[c])]
         for c in diff_cols:
             changes.append({"row_index": int(idx), "column": c, "before": str(b[c]), "after": str(a[c])})
+            changes.append({
+                "method": method,
+                "row_index": int(idx),
+                "column": c,
+                "old_value": str(b[c]),
+                "new_value": str(a[c]),
+                "note": note,
+            })
+    return changes
+
+def _write_audit_log(entries: List[Dict[str, Any]], out_path: Path) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(changes).to_csv(out_path, index=False)
+    with out_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_FIELDS)
+        writer.writeheader()
+        for entry in entries:
+            row = {field: entry.get(field, "") for field in AUDIT_FIELDS}
+            writer.writerow(row)
 
 def main():
     p = argparse.ArgumentParser()
@@ -54,6 +89,7 @@ def main():
     write_csv(trad, out_dir / "cleaned_traditional.csv")
 
     metrics_rows = [build_metrics_row(raw, s, "raw"), build_metrics_row(trad, s, "traditional")]
+    audit_entries = _collect_audit_entries(raw, trad, "traditional", "traditional_cleaning")
 
     # GenAI cleaning (optional)
     genai_outputs = []
@@ -79,6 +115,9 @@ def main():
 
         # Audit log for main GenAI output
         _audit_log(trad, genai_main, out_dir / "audit_log_traditional_vs_genai.csv")
+        # Audit log entries for main GenAI output
+        genai_label = "genai_guardrails" if not args.no_guardrails else "genai"
+        audit_entries.extend(_collect_audit_entries(trad, genai_main, genai_label, "genai_cleaning"))
 
     # Error-injection benchmark (optional, but valuable for dissertation)
     # Build a high-confidence subset: rows that have non-null key fields
@@ -109,6 +148,8 @@ def main():
         "guardrails": not args.no_guardrails,
         "reliability_runs": args.reliability_runs,
     })
+
+    _write_audit_log(audit_entries, out_dir / "audit_log.csv")
 
 if __name__ == "__main__":
     main()
