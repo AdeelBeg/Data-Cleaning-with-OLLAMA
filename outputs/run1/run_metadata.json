@@ -1,0 +1,8 @@
+{
+  "input_csv": "/Users/adeel28/Documents/Adeel /Dessert'n/coding/olama/dissertation_cleaning_codebase_ollama_qwen2.5_7b/retail_store_sales.csv",
+  "model": "qwen2.5:7b",
+  "genai_enabled": true,
+  "guardrails": true,
+  "reliability_runs": 5,
+  "timestamp_utc": "2025-12-18T23:09:42.303341Z"
+}

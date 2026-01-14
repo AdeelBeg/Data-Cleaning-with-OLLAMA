@@ -1,0 +1,16 @@
+{
+  "traditional": {
+    "repairs_total": 200,
+    "repaired_correct": 40,
+    "repaired_incorrect": 120,
+    "unchanged": 40,
+    "repair_accuracy": 0.2
+  },
+  "genai_guardrails": {
+    "repairs_total": 200,
+    "repaired_correct": 57,
+    "repaired_incorrect": 103,
+    "unchanged": 40,
+    "repair_accuracy": 0.285
+  }
+}

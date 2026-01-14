@@ -1,0 +1,49 @@
+{
+  "row_count": 12575,
+  "col_count": 11,
+  "constraint_results": [
+    {
+      "name": "transaction_id_nonnull_pattern_unique",
+      "passed": 12575,
+      "failed": 0,
+      "fail_rate_pct": 0.0
+    },
+    {
+      "name": "customer_id_nonnull_pattern",
+      "passed": 12575,
+      "failed": 0,
+      "fail_rate_pct": 0.0
+    },
+    {
+      "name": "Price Per Unit_numeric_gt0",
+      "passed": 11966,
+      "failed": 609,
+      "fail_rate_pct": 4.84
+    },
+    {
+      "name": "quantity_int_ge1",
+      "passed": 11971,
+      "failed": 604,
+      "fail_rate_pct": 4.8
+    },
+    {
+      "name": "Total Spent_numeric_ge0",
+      "passed": 11971,
+      "failed": 604,
+      "fail_rate_pct": 4.8
+    },
+    {
+      "name": "transaction_date_parseable",
+      "passed": 12575,
+      "failed": 0,
+      "fail_rate_pct": 0.0
+    },
+    {
+      "name": "arithmetic_total_price_times_qty",
+      "passed": 11362,
+      "failed": 1213,
+      "fail_rate_pct": 9.65
+    }
+  ],
+  "quality_score": 96.56
+}

@@ -1,0 +1,6 @@
+date,task,approach,active_minutes,iterations,notes
+2025-12-16,Define constraints,Baseline,,
+2025-12-16,Implement cleaning rules,Baseline,,
+2025-12-16,Debug + rework,Baseline,,
+2025-12-16,Prompt design,GenAI,,
+2025-12-16,Integrate guardrails,GenAI-G,,

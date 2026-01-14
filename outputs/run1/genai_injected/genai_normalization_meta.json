@@ -1,0 +1,43 @@
+{
+  "model": "qwen2.5:7b",
+  "fields": {
+    "Category": {
+      "canonical_options": [
+        "Computers And Electric Accessories",
+        "Food",
+        "Furniture",
+        "Electric Household Essentials",
+        "Patisserie",
+        "Beverages",
+        "Butchers",
+        "Milk Products"
+      ],
+      "observed_values_count": 8,
+      "quality_before": 98.86,
+      "quality_after": 98.86,
+      "accepted": true
+    },
+    "Payment Method": {
+      "canonical_options": [
+        "Cash",
+        "Digital Wallet",
+        "Credit Card",
+        "Paybuddy"
+      ],
+      "observed_values_count": 4,
+      "quality_before": 98.86,
+      "quality_after": 98.86,
+      "accepted": true
+    },
+    "Location": {
+      "canonical_options": [
+        "Online",
+        "In-Store"
+      ],
+      "observed_values_count": 2,
+      "quality_before": 98.86,
+      "quality_after": 98.86,
+      "accepted": true
+    }
+  }
+}

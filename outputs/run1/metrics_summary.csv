@@ -1,0 +1,4 @@
+approach,quality_score,rows,fail_rate_transaction_id_nonnull_pattern_unique,fail_rate_customer_id_nonnull_pattern,fail_rate_Price Per Unit_numeric_gt0,fail_rate_quantity_int_ge1,fail_rate_Total Spent_numeric_ge0,fail_rate_transaction_date_parseable,fail_rate_arithmetic_total_price_times_qty
+raw,96.56,12575,0.0,0.0,4.84,4.8,4.8,0.0,9.65
+traditional,97.94,12575,0.0,0.0,0.0,4.8,4.8,0.0,4.8
+genai_guardrails,97.94,12575,0.0,0.0,0.0,4.8,4.8,0.0,4.8
