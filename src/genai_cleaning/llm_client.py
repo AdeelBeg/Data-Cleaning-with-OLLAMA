@@ -72,18 +72,7 @@ class LLMClient:
         temperature: float = 0.2,
         **kwargs: Any,
     ) -> T:
-        """Generate a JSON response and validate it against a Pydantic model.
-
-        Parameters
-        ----------
-        model:
-            Kept for backward compatibility with the OpenAI-based codebase.
-            If provided, it overrides the instance default Ollama model.
-        system, user:
-            Prompts.
-        schema_model:
-            A Pydantic BaseModel subclass.
-        """
+      
 
         # Allow callers to pass --model ... as before, but default to qwen2.5:7b.
         ollama_model = (model or self.model).strip()
